@@ -871,7 +871,13 @@ typedef struct
 	int			enterframe;			// level.framenum the client entered the game
 	int			score;				// frags, etc
 	vec3_t		cmd_angles;			// angles sent over in the last command
-
+	    
+	    //Sayyid Added a Script here
+	    //+ BD - 1/3 - tagit is the plays role in the game mode
+		//+ BD - 1/3 _ Definitions:
+		//+ BD - 1/3 - 1. Runner - A regular player
+		//+ BD - 1/3 - 2. It person - The guy who tags
+		int             tagit;     //+ BD - 1/15 The flag that determines our player's role
 	qboolean	spectator;			// client is a spectator
 } client_respawn_t;
 

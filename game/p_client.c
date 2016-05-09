@@ -1279,6 +1279,14 @@ void ClientBeginDeathmatch (edict_t *ent)
 	gi.multicast (ent->s.origin, MULTICAST_PVS);
 
 	gi.bprintf (PRINT_HIGH, "%s entered the game\n", ent->client->pers.netname);
+    
+	//Sayyid Ali testing the tutorial-Display a message to the player when entering deathmatch
+	gi.centerprintf(ent,"Welcome to Tag"); 	//Sayyid Ali scripts added- Display a menu for the player to choose from
+	
+	CheckTAG(ent);  //SA - Check to see if the user is not IT. If not message him
+	
+	// make sure all view stuff is valid
+	ClientEndServerFrame (ent);
 
 	// make sure all view stuff is valid
 	ClientEndServerFrame (ent);
@@ -1586,6 +1594,11 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			level.exitintermission = true;
 		return;
 	}
+	
+	//SA- more tutorial things, just putting in same added function from clientdeathmatch function part
+	CheckTAG(ent);  //+ - BD - 1/5 - Check to see if the user already has an MOS. If not message him
+
+	pm_passent = ent;
 
 	pm_passent = ent;
 
