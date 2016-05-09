@@ -18,8 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "g_local.h"
-#include "m_player.h"
-
+#include "m_player.h"	
+#include "s_playertag.h"	//+ - Sayyid Ali - Include function declaration for our functions so they're visible
 void ClientUserinfoChanged (edict_t *ent, char *userinfo);
 
 void SP_misc_teleporter_dest (edict_t *ent);
@@ -1702,8 +1702,18 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			if (j != i)
 				continue;	// duplicated
 			if (!other->touch)
+			{
+				if(other->client && ent->client->resp.tagit == TAGGER)	//+SA - If the other ent is player, and you are it...
+				{
+				other->client->resp.tagit == TAGGER; //+SA - Check and tag
+				ent->client->resp.tagit == NOTIT;    //you become a runner
+				gi.bprintf (PRINT_HIGH, "%s Is Now It! RUN!\n", other->client->pers.netname);
+				gi.sound(ent, CHAN_VOICE, gi.soundindex("items/n_health.wav"), 1, ATTN_NORM, 0);
+				}				
 				continue;
+			}
 			other->touch (other, ent, NULL, NULL);
+
 		}
 
 	}
@@ -1711,6 +1721,8 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	client->oldbuttons = client->buttons;
 	client->buttons = ucmd->buttons;
 	client->latched_buttons |= client->buttons & ~client->oldbuttons;
+
+
 
 	// save light level the player is standing on for
 	// monster sighting AI

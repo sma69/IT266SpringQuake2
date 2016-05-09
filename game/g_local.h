@@ -873,11 +873,11 @@ typedef struct
 	vec3_t		cmd_angles;			// angles sent over in the last command
 	    
 	    //Sayyid Added a Script here
-	    //+ BD - 1/3 - tagit is the plays role in the game mode
-		//+ BD - 1/3 _ Definitions:
-		//+ BD - 1/3 - 1. Runner - A regular player
-		//+ BD - 1/3 - 2. It person - The guy who tags
-		int             tagit;     //+ BD - 1/15 The flag that determines our player's role
+	    //tagit is the player's role in the game mode
+		//Definitions:
+		//1 Runner - A regular player
+		//2 It person - The guy who tags
+		int             tagit;     //The flag that determines our player's role
 	qboolean	spectator;			// client is a spectator
 } client_respawn_t;
 
@@ -965,6 +965,9 @@ struct gclient_s
 
 	edict_t		*chase_target;		// player we are chasing
 	qboolean	update_chase;		// need to update chase info?
+	int			max_health;
+	int			heal_health;	//+SA - 1/15 - The amount of health points to heal others with
+	int			selected_item;
 };
 
 

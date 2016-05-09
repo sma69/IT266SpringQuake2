@@ -1,0 +1,17 @@
+﻿Build started 5/9/2016 6:17:26 PM.
+     1>Project "C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_gl\ref_gl.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\release\ref_gl.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         ref_gl.vcxproj -> C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_gl\.\..\release\ref_gl.dll
+       FinalizeBuildStatus:
+         Deleting file ".\release\ref_gl.unsuccessfulbuild".
+         Touching ".\release\ref_gl.lastbuildstate".
+     1>Done Building Project "C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_gl\ref_gl.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.27
