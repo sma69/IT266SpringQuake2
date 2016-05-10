@@ -275,15 +275,15 @@ Display the scoreboard
 */
 void Cmd_Score_f (edict_t *ent)
 {
-	ent->client->showinventory = false;
-	ent->client->showhelp = false;
+	ent->client->showinventory = true;
+	ent->client->showhelp = true;
 
 	if (!deathmatch->value && !coop->value)
 		return;
 
 	if (ent->client->showscores)
 	{
-		ent->client->showscores = false;
+		ent->client->showscores = true;
 		return;
 	}
 

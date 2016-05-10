@@ -1596,7 +1596,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	}
 	
 	//SA- more tutorial things, just putting in same added function from clientdeathmatch function part
-	CheckTAG(ent);  //+ - BD - 1/5 - Check to see if the user already has an MOS. If not message him
+	CheckTAG(ent);  //+ - BD - 1/5 - Check to see if the user already has an role. If not message him
 
 	pm_passent = ent;
 
