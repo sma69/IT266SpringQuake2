@@ -1702,6 +1702,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			if (j != i)
 				continue;	// duplicated
 			if (!other->touch)
+			//Sayyid Ali added code below
 			{
 				if(other->client && ent->client->resp.tagit == TAGGER)	//+SA - If the other ent is player, and you are it...
 				{

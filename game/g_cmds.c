@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "g_local.h"
 #include "m_player.h"
+#include "s_playertag.h"
 
 
 char *ClientTeam (edict_t *ent)
@@ -986,9 +987,9 @@ void ClientCommand (edict_t *ent)
 	else if (Q_stricmp (cmd, "wave") == 0)
 		Cmd_Wave_f (ent);
     //+ Sayyid Ali - Added to handle our player class 
-	else if (Q_stricmp (cmd, "notit") == 0) 	//+ SA - 1/5 - Asking to be not it
+	else if (Q_stricmp (cmd, "runner") == 0) 	//+ SA - 1/5 - Asking to be not it
 		Cmd_TAG_f (ent, cmd);			//+ SA- OK, call our new function with the right arguments
-	else if (Q_stricmp (cmd, "it") == 0)	//+ SA - 1/5 - Asking to be it
+	else if (Q_stricmp (cmd, "chaser") == 0)	//+ SA - 1/5 - Asking to be it
 		Cmd_TAG_f(ent, cmd);			//+ SA - 1/5 - Ditto!
 
 	else if (Q_stricmp(cmd, "playerlist") == 0)

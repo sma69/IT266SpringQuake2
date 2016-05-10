@@ -22,7 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "m_player.h"
 
-
+//Sayyid Ali Set weapon damage values to 0, killing is not allowed in tag
+//or the game may break
 static qboolean	is_quad;
 static byte		is_silenced;
 
@@ -174,55 +175,58 @@ current
 void ChangeWeapon (edict_t *ent)
 {
 	int i;
-
-	if (ent->client->grenade_time)
+	//Sayyid Ali- Setting it so only the chaser can change weapons
+	if(ent->client->resp.tagit == 1)
 	{
-		ent->client->grenade_time = level.time;
-		ent->client->weapon_sound = 0;
-		weapon_grenade_fire (ent, false);
-		ent->client->grenade_time = 0;
-	}
+		if (ent->client->grenade_time)
+		{
+			ent->client->grenade_time = level.time;
+			ent->client->weapon_sound = 0;
+			weapon_grenade_fire (ent, false);
+			ent->client->grenade_time = 0;
+		}
 
-	ent->client->pers.lastweapon = ent->client->pers.weapon;
-	ent->client->pers.weapon = ent->client->newweapon;
-	ent->client->newweapon = NULL;
-	ent->client->machinegun_shots = 0;
+		ent->client->pers.lastweapon = ent->client->pers.weapon;
+		ent->client->pers.weapon = ent->client->newweapon;
+		ent->client->newweapon = NULL;
+		ent->client->machinegun_shots = 0;
 
-	// set visible model
-	if (ent->s.modelindex == 255) {
-		if (ent->client->pers.weapon)
-			i = ((ent->client->pers.weapon->weapmodel & 0xff) << 8);
+		// set visible model
+		if (ent->s.modelindex == 255) {
+			if (ent->client->pers.weapon)
+				i = ((ent->client->pers.weapon->weapmodel & 0xff) << 8);
+			else
+				i = 0;
+			ent->s.skinnum = (ent - g_edicts - 1) | i;
+		}
+
+		if (ent->client->pers.weapon && ent->client->pers.weapon->ammo)
+			ent->client->ammo_index = ITEM_INDEX(FindItem(ent->client->pers.weapon->ammo));
 		else
-			i = 0;
-		ent->s.skinnum = (ent - g_edicts - 1) | i;
-	}
+			ent->client->ammo_index = 0;
 
-	if (ent->client->pers.weapon && ent->client->pers.weapon->ammo)
-		ent->client->ammo_index = ITEM_INDEX(FindItem(ent->client->pers.weapon->ammo));
-	else
-		ent->client->ammo_index = 0;
+		if (!ent->client->pers.weapon)
+		{	// dead
+			ent->client->ps.gunindex = 0;
+			return;
+		}
 
-	if (!ent->client->pers.weapon)
-	{	// dead
-		ent->client->ps.gunindex = 0;
-		return;
-	}
+		ent->client->weaponstate = WEAPON_ACTIVATING;
+		ent->client->ps.gunframe = 0;
+		ent->client->ps.gunindex = gi.modelindex(ent->client->pers.weapon->view_model);
 
-	ent->client->weaponstate = WEAPON_ACTIVATING;
-	ent->client->ps.gunframe = 0;
-	ent->client->ps.gunindex = gi.modelindex(ent->client->pers.weapon->view_model);
-
-	ent->client->anim_priority = ANIM_PAIN;
-	if(ent->client->ps.pmove.pm_flags & PMF_DUCKED)
-	{
-			ent->s.frame = FRAME_crpain1;
-			ent->client->anim_end = FRAME_crpain4;
-	}
-	else
-	{
-			ent->s.frame = FRAME_pain301;
-			ent->client->anim_end = FRAME_pain304;
+		ent->client->anim_priority = ANIM_PAIN;
+		if(ent->client->ps.pmove.pm_flags & PMF_DUCKED)
+		{
+				ent->s.frame = FRAME_crpain1;
+				ent->client->anim_end = FRAME_crpain4;
+		}
+		else
+		{
+				ent->s.frame = FRAME_pain301;
+				ent->client->anim_end = FRAME_pain304;
 			
+		}
 	}
 }
 
@@ -548,12 +552,12 @@ void weapon_grenade_fire (edict_t *ent, qboolean held)
 	vec3_t	offset;
 	vec3_t	forward, right;
 	vec3_t	start;
-	int		damage = 125;
+	int		damage = 0;
 	float	timer;
 	int		speed;
 	float	radius;
 
-	radius = damage+40;
+	radius = damage+ 0;
 	if (is_quad)
 		damage *= 4;
 
@@ -711,10 +715,10 @@ void weapon_grenadelauncher_fire (edict_t *ent)
 	vec3_t	offset;
 	vec3_t	forward, right;
 	vec3_t	start;
-	int		damage = 120;
+	int		damage = 0;
 	float	radius;
 
-	radius = damage+40;
+	radius = damage+ 0;
 	if (is_quad)
 		damage *= 4;
 
@@ -764,8 +768,8 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	float	damage_radius;
 	int		radius_damage;
 
-	damage = 100 + (int)(random() * 20.0);
-	radius_damage = 120;
+	damage = 0 + (int)(random() * 0);
+	radius_damage = 0;
 	damage_radius = 120;
 	if (is_quad)
 	{
@@ -849,10 +853,10 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	int		damage;
 
 	if (deathmatch->value)
-		damage = 15;
+		damage = 0;
 	else
-		damage = 10;
-	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
+		damage = 100;
+	Blaster_Fire (ent, vec3_origin, 0, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
 }
 
@@ -901,10 +905,10 @@ void Weapon_HyperBlaster_Fire (edict_t *ent)
 			else
 				effect = 0;
 			if (deathmatch->value)
-				damage = 15;
+				damage = 0;
 			else
-				damage = 20;
-			Blaster_Fire (ent, offset, damage, true, effect);
+				damage = 50;
+			Blaster_Fire (ent, offset, 0, true, effect);
 			if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 				ent->client->pers.inventory[ent->client->ammo_index]--;
 
@@ -956,8 +960,8 @@ void Machinegun_Fire (edict_t *ent)
 	vec3_t		start;
 	vec3_t		forward, right;
 	vec3_t		angles;
-	int			damage = 8;
-	int			kick = 2;
+	int			damage = 0;
+	int			kick = 0;
 	vec3_t		offset;
 
 	if (!(ent->client->buttons & BUTTON_ATTACK))
@@ -1011,7 +1015,7 @@ void Machinegun_Fire (edict_t *ent)
 	AngleVectors (angles, forward, right, NULL);
 	VectorSet(offset, 0, 8, ent->viewheight-8);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
-	fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
+	fire_bullet (ent, start, forward, 0, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_MACHINEGUN);
 
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);
@@ -1053,12 +1057,12 @@ void Chaingun_Fire (edict_t *ent)
 	float		r, u;
 	vec3_t		offset;
 	int			damage;
-	int			kick = 2;
+	int			kick = 0;
 
 	if (deathmatch->value)
-		damage = 6;
+		damage = 0;
 	else
-		damage = 8;
+		damage = 0;
 
 	if (ent->client->ps.gunframe == 5)
 		gi.sound(ent, CHAN_AUTO, gi.soundindex("weapons/chngnu1a.wav"), 1, ATTN_IDLE, 0);
@@ -1148,7 +1152,7 @@ void Chaingun_Fire (edict_t *ent)
 		VectorSet(offset, 0, r, u + ent->viewheight-8);
 		P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 
-		fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
+		fire_bullet (ent, start, forward, 0, 0, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_CHAINGUN);
 	}
 
 	// send muzzle flash
@@ -1186,8 +1190,8 @@ void weapon_shotgun_fire (edict_t *ent)
 	vec3_t		start;
 	vec3_t		forward, right;
 	vec3_t		offset;
-	int			damage = 4;
-	int			kick = 8;
+	int			damage = 0;
+	int			kick = 2;
 
 	if (ent->client->ps.gunframe == 9)
 	{
@@ -1242,8 +1246,8 @@ void weapon_supershotgun_fire (edict_t *ent)
 	vec3_t		forward, right;
 	vec3_t		offset;
 	vec3_t		v;
-	int			damage = 6;
-	int			kick = 12;
+	int			damage = 0;
+	int			kick = 0;
 
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
 
@@ -1309,12 +1313,12 @@ void weapon_railgun_fire (edict_t *ent)
 
 	if (deathmatch->value)
 	{	// normal damage is too extreme in dm
-		damage = 100;
-		kick = 200;
+		damage = 0;
+		kick = 0;
 	}
 	else
 	{
-		damage = 150;
+		damage = 500;
 		kick = 250;
 	}
 
@@ -1372,7 +1376,7 @@ void weapon_bfg_fire (edict_t *ent)
 	float	damage_radius = 1000;
 
 	if (deathmatch->value)
-		damage = 200;
+		damage = 0;
 	else
 		damage = 500;
 
