@@ -1567,6 +1567,8 @@ void PrintPmove (pmove_t *pm)
 	Com_Printf ("sv %3i:%i %i\n", pm->cmd.impulse, c1, c2);
 }
 
+
+
 /*
 ==============
 ClientThink
@@ -1706,9 +1708,11 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			{
 				if(other->client && ent->client->resp.tagit == TAGGER)	//+SA - If the other ent is player, and you are it...
 				{
-				other->client->resp.tagit == TAGGER; //+SA - Check and tag
-				ent->client->resp.tagit == NOTIT;    //you become a runner
-				gi.bprintf (PRINT_HIGH, "%s Is Now It! RUN!\n", other->client->pers.netname);
+				other->client->resp.tagit = 1; //+SA - Check and tag
+				ent->client->resp.tagit = 2;    //you become a runner
+				T_Damage (other, ent, ent, vec3_origin, ent->s.origin, vec3_origin, 100000, 0, DAMAGE_NO_PROTECTION, MOD_TELEFRAG);
+				T_Damage (ent, ent, ent, vec3_origin, ent->s.origin, vec3_origin, 100000, 0, DAMAGE_NO_PROTECTION, MOD_TELEFRAG);
+				
 				gi.sound(ent, CHAN_VOICE, gi.soundindex("items/n_health.wav"), 1, ATTN_NORM, 0);
 				}				
 				continue;

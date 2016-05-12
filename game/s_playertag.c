@@ -24,6 +24,7 @@
 		if(ent->client->resp.tagit == 1)
 		{
 			gi.centerprintf(ent, "You Are It");
+			
 		}
 		if(ent->client->resp.tagit == 2)
 		{
@@ -62,6 +63,7 @@
 		if(Q_stricmp (cmd, "chaser") == 0)
 		{
 			ent->client->resp.tagit = 1;
+			gi.bprintf (PRINT_HIGH, "%s Is Now It! RUN!\n", ent->client->pers.netname);
 			gi.centerprintf(ent,"You Are It! RUN!.\n\nGood Luck!\n");
 		}
 		else if(Q_stricmp (cmd, "runner") == 0)
@@ -74,7 +76,7 @@
 		//For completeness. We should NEVER get here.
 			ent->client->resp.tagit = 0;
 			gi.centerprintf(ent,"Invalid role selection!\n");
-		}
+		}												
 
 		//Play a sound just to be cool...
 		gi.sound(ent, CHAN_VOICE, gi.soundindex("player/male/jump1.wav"), 1, ATTN_NORM, 0);

@@ -1,4 +1,4 @@
-﻿Build started 5/9/2016 11:02:18 PM.
+﻿Build started 5/11/2016 2:45:28 PM.
      1>Project "C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_soft\ref_soft.vcxproj" on node 5 (build target(s)).
      1>InitializeBuildStatus:
          Touching ".\release\ref_soft.unsuccessfulbuild".
@@ -19,15 +19,15 @@
          Copyright (C) Microsoft Corporation.  All rights reserved.
          
          Performing Custom Build Tools
+         Microsoft (R) Macro Assembler Version 10.00.30319.01
+         Copyright (C) Microsoft Corporation.  All rights reserved.
+         
           Assembling: C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_soft\r_edgea.asm
-         Microsoft (R) Macro Assembler Version 10.00.30319.01
-         Copyright (C) Microsoft Corporation.  All rights reserved.
-         
          Performing Custom Build Tools
-          Assembling: C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_soft\r_polysa.asm
          Microsoft (R) Macro Assembler Version 10.00.30319.01
          Copyright (C) Microsoft Corporation.  All rights reserved.
          
+          Assembling: C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_soft\r_polysa.asm
          Performing Custom Build Tools
           Assembling: C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_soft\r_scana.asm
          Microsoft (R) Macro Assembler Version 10.00.30319.01
@@ -74,10 +74,9 @@
          .\release\rw_ddraw.obj
          .\release\rw_dib.obj
          .\release\rw_imp.obj
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Platforms\Win32\Microsoft.Cpp.Win32.Targets(268,5): error MSB6006: "link.exe" exited with code 1181.
      1>LINK : fatal error LNK1181: cannot open input file '.\..\release\\.obj'
      1>Done Building Project "C:\Users\Sayyid\it266spring\quake2\IT266SpringQuake2\ref_soft\ref_soft.vcxproj" (build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:01.40
+Time Elapsed 00:00:00.61

@@ -612,6 +612,8 @@ qboolean Pickup_Armor (edict_t *ent, edict_t *other)
 	int				newcount;
 	float			salvage;
 	int				salvagecount;
+	//Sayyid Ali added speed boost
+	int i;
 
 	// get info on new armor
 	newinfo = (gitem_armor_t *)ent->item->info;
@@ -621,6 +623,14 @@ qboolean Pickup_Armor (edict_t *ent, edict_t *other)
 	// handle armor shards specially
 	if (ent->item->tag == ARMOR_SHARD)
 	{
+		//Sayyid Ali speed boost
+		for (i=0 ; i<3 ; i++)
+		{
+		
+			ent->velocity[i] +=20;
+		}
+		gi.linkentity (ent);
+
 		if (!old_armor_index)
 			other->client->pers.inventory[jacket_armor_index] = 2;
 		else
@@ -727,10 +737,17 @@ void Use_PowerArmor (edict_t *ent, gitem_t *item)
 qboolean Pickup_PowerArmor (edict_t *ent, edict_t *other)
 {
 	int		quantity;
+	//added speed to power armor
+	int i;
 
 	quantity = other->client->pers.inventory[ITEM_INDEX(ent->item)];
 
 	other->client->pers.inventory[ITEM_INDEX(ent->item)]++;
+	for (i=0 ; i<3 ; i++)
+	{
+			ent->velocity[i] = 500;
+	}
+	gi.linkentity (ent);
 
 	if (deathmatch->value)
 	{

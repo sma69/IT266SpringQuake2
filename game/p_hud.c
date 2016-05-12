@@ -78,7 +78,7 @@ void BeginIntermission (edict_t *targ)
 	if (level.intermissiontime)
 		return;		// already activated
 
-	game.autosaved = false;
+	game.autosaved = true;
 
 	// respawn any dead clients
 	for (i=0 ; i<maxclients->value ; i++)
